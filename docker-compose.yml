@@ -1,0 +1,12 @@
+version: '3'
+services:
+  webserver:
+    build: node
+    container_name: app
+    image: node-express-dev:1.0
+    tty: true
+    # ホストのディレクトリにマウント
+    volumes:
+      - ./node/app:/app
+    ports:
+      - "8080:3000"
