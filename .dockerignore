@@ -1,0 +1,6 @@
+# root以下のあらゆるサブディレクトリ内でtempで始まる名前やファイルの除外
+node
+node_modules
+.git
+.gitignore
+.env
