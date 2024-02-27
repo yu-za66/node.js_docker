@@ -56,3 +56,7 @@ node.jsのコンテナが起動しないといわれる。（nginxとかは動�
 
 ・Error connecting to MySQL: Error: connect ECONNREFUSED 127.0.0.1:3306
 node.jsのコンテナからmysqlにつながらない案件
+
+passwordの共有手段
+・.envを使って読み込ませている
+・gitignoreに指定しているため、コミットしてもファイルは反映されない。
