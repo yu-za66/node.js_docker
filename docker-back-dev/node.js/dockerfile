@@ -1,0 +1,28 @@
+# ベースイメージを指定
+# alpineはメモリの専有する領域が小さい
+FROM node:16-alpine3.15
+
+# ディレクトリを移動する
+# コンテナに入った時はこのディレクトリで作業することになる
+WORKDIR /app
+
+# node.jsで使う NODE_ENVという環境変数を定義する,本番環境では production
+ENV NODE_ENV=development
+ENV NODE_VERSION=21.4.0
+
+#npm ci は開発、本番の環境どちらも、同じバージョンで揃えることができる(lock.jsonからインストールされる)
+# devDependenciesなパッケージを削除（--only=production）
+# RUN npm ci --only=production #本番環境を用意するときに使用
+
+# コードを変更してもパッケージが再インストールされないように
+COPY /node-project/package*.json /app/
+COPY /node-project/ /app/
+
+
+
+RUN npm install
+
+# 権限
+# USER node
+# コンテナ構築時にデフォルトで実行するコマンドをします。RUNと同じで/bit/sh -cと同じで、docker runの実行時にコマンドが実行されます。
+CMD "npm" "start"
