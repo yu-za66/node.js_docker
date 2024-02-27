@@ -17,6 +17,6 @@ https://qiita.com/art_porokyu/items/8363334c358c67adb61a
 
 ***バージョン***
 | OS              | Alpine Linux v3.18 |
-|--------|-----|------------|
+|-----------------|--------------------|
 | Node.js         | v14.2.0            |
 | MySQL           | v8.0               |
