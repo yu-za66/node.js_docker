@@ -1,0 +1,48 @@
+--sampleデータ
+--user作成コマンド
+CREATE USER 'user'@'%' IDENTIFIED BY 'userpass';
+
+--権限作成コマンドCREATE USER 'user'@'%' IDENTIFIED BY 'userpass';
+GRANT ALL PRIVILEGES ON psi.* TO 'user'@'%';
+
+--一旦保存
+FLUSH PRIVILEGES;
+
+--userで再度ログイン
+exit,mysql -u user -p
+
+--passwordは
+--DB作成コマンド
+create database psi;
+
+--仮データ作成コマンド
+CREATE TABLE user (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE word (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  word VARCHAR(255) NOT NULL,
+  meaning TEXT NOT NULL,
+  user_id INT,
+  FOREIGN KEY (user_id) REFERENCES user(id)
+);
+
+-- usertable テーブルにデータを挿入
+INSERT INTO user (username, email) VALUES
+('user1', 'user1@example.com'),
+('user2', 'user2@example.com'),
+('user3', 'user3@example.com');
+
+-- wordtable テーブルにデータを挿入
+INSERT INTO word (word, meaning, user_id) VALUES
+('Word1', 'Meaning1', 1),
+('Word2', 'Meaning2', 2),
+('Word3', 'Meaning3', 3),
+('Word4', 'Meaning4', 1);
+
+
+-- 変更の反映
+FLUSH PRIVILEGES;
