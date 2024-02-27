@@ -2,7 +2,7 @@ version: '3'
 services:
   web:
     build:
-      context: ./docker-back-dev/node.js  # ビルドコンテキストのディレクトリを正しく指定
+      context: ../docker-back-dev/node.js  # ビルドコンテキストのディレクトリを正しく指定
       dockerfile: /dockerfile  # dockerfileの場所を記述
     container_name: node.js
     image:  node:16-alpine3.15
