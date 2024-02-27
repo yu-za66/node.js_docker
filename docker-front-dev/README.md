@@ -1,9 +1,9 @@
 作業する際はappディレクトリで（dockerのコンテナ内のディレクトリをホストにマウントしている）
 
 ***バージョン***
-OS Alpine Linux v3.18
-node.js v21.2.0
-mysql v8.0
+| OS              | Alpine Linux v3.18 |
+| Node.js         | v14.2.0            |
+| MySQL           | v8.0               |
 
 ***開発手順***
 ****フロントエンド****
