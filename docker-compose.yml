@@ -1,60 +1,68 @@
 version: '3'
 services:
-  web:
+  back:
     build:
-      context: ../docker-back-dev/node.js  # ビルドコンテキストのディレクトリを正しく指定
-      dockerfile: /dockerfile  # dockerfileの場所を記述
+      context: ../PSI/docker-back-dev/node.js
+      dockerfile: /dockerfile
     container_name: node.js
-    image:  node:16-alpine3.15
-
-
-    # ttyを許可をすると/bin/bashでコンテナに入ることができる。
-    # 開発時にはtrueにして、テスト/本番環境はfalseにする。
+    image: node:16-alpine3.15
     tty: true
-    # ホストのディレクトリにマウント    
-    # bindはお互いに同期している。volumesはコンテナ側のコードをかえれば、volumeに指定したディレクトリが更新される
     volumes: 
-      - ./docker-back-dev/node.js/node-project:/app #コンテナのディレクトリと同期
+      - ../PSI/docker-back-dev/node.js/node-project:/app
     ports:
-      - "3000:3000"  # - ${ホスト側}:${コンテナ側}
-  
-    #依存するコンテなのネットワークを記述   
-    depends_on: #dbの起動を待つ
+      - "5000:5000"
+    depends_on:
       - db
     networks:
-    - backend
+      - backend
 
   db:
     container_name: mysql
     image: mysql:8.0.23
-
-    # 環境変数を設定
     environment:
       - MYSQL_HOST=mysql
-      - MYSQL_USER=user #rootにするとエラーが出る
+      - MYSQL_USER=user
       - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASS}
       - TZ=Asia/Tokyo
-      - MYSQL_SERVER=db  # dbはMySQLのサービス名です
-
-    # ボリュームバインド
-    volumes:
-      - mysql-data:/var/lib/mysql # MySQLのデータディレクトリをボリュームにマウント
-      # - ./docker-back-dev/mysql/conf:/etc/mysql/conf/:ro #読み取り専用ディレクトリ
-      # - ./docker-back-dev/mysql/logs:/var/log/mysql
-      # - docker-back-dev/mysql-data:/var/lib/mysql
-
-    # ローカルで他コンテナと通信をしたい場合に繋げる。
-    # expose:
-    #   - ${ コンテナ間で開けるポート番号 }
+      - MYSQL_SERVER=db
+      # 再起動時に初期化できない
+    # volumes:
+      # - ../PSI/docker-back-dev/mysql:/var/lib/mysql
     ports:
       - "3306:3306"
-    env_file: .env # 環境変数を指定
+    env_file: .env
     tty: true
     networks:
-    - backend
+      - backend
+
+  front:
+    container_name: react
+    build:
+      context: ../PSI/docker-front-dev/react
+      dockerfile: /dockerfile
+    ports:
+      - "4000:4000"
+    environment:
+      REACT_APP_API_URL: http://back:3000
+    networks:
+      - frontend
+
+  # web:
+  #   image: nginx:1.21
+  #   container_name: nginx
+  #   volumes:
+  #     - ../PSI/nginx/conf.d:/etc/nginx/conf.d
+  #   ports:
+  #     - "80:80"
+  #   depends_on:
+  #     - front
+  #   networks:
+  #     - frontend
+  #   command: ["nginx", "-g", "daemon off;"]
 
 networks:
- backend:
+  backend:
+  frontend:
 
 volumes:
   mysql-data:
