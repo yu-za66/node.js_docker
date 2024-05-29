@@ -6,7 +6,6 @@ WORKDIR /app
 COPY ../psi-react/package*.json ./
 RUN npm ci
 COPY ../psi-react/ .
-RUN npm run build
-
+RUN npm install
 # 起動直後にnpm start
 CMD ["npm", "start"]

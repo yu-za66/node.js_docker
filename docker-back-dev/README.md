@@ -1,8 +1,6 @@
 dockerfile,ymlファイル参照元
 https://qiita.com/art_porokyu/items/8363334c358c67adb61a
 
-
-
 **開発手順**
 ****バックエンド****
 
@@ -20,13 +18,19 @@ https://qiita.com/art_porokyu/items/8363334c358c67adb61a
 
 5.npm start
 
-6.localhost:3000にアクセスし、hello worldがでてきたら完了
+6.localhost:5000にアクセスし、hello worldがでてきたら完了
 
+7.localhost:5000/usersにアクセスして、
 パスワードの共有については考え中
 
-### 確認すること
-DBでコマンドを打って、user、tableがちゃんと生成できてるか
-DBTest.jsで表示できるか確認する。
+
+
+### やること
+Reactが起動できるか？
+frontとbackが連結できるか
+
+
+DB設定→[DB_Setting.md](./DB_Setting.md)
 
 ***バージョン***
 | OS              | Alpine Linux v3.18 |

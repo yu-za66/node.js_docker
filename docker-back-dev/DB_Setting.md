@@ -1,14 +1,15 @@
 -- 上から順番に実行してください
 
--- mysqlコンテナに入り、root権限でログイン
-`docker exec -it mysql mysql -u root -p`
+### プロジェクトのルートディレクトリに移動して作業を開始
+
+-- mysqlコンテナに入り、root権限でログイン `docker exec -it mysql mysql -u root -p`
 (passwordは.envに記載)
 
--- user作成 `CREATE USER 'user'@'localhost' IDENTIFIED BY 'userpass';`
+-- user作成 `CREATE USER 'user'@'%' IDENTIFIED BY 'userpass';`
 
 -- DB作成 `create database psi;`
 
--- 権限作成 `GRANT ALL PRIVILEGES ON psi.* TO 'user'@'localhost';`
+-- 権限作成 `GRANT ALL PRIVILEGES ON psi.* TO 'user'@'%';`
 
 -- 変更の反映 `FLUSH PRIVILEGES;`
 
@@ -19,7 +20,7 @@
 
 -- ログアウト `exit`  
 
--- userでログイン `docker exec -it mysql mysql -u user -p -h localhost`
+-- userでログイン `docker exec -it mysql mysql -u user -p`
 
 -- userのパスワードは `userpass`
 
